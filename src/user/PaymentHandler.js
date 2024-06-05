@@ -1,41 +1,47 @@
 import axios from 'axios';
 
 const PaymentHandler = (Id, price) => async (event) => {
-  event.preventDefault(); // Ensure default behavior is prevented at the start of the handler
+  event.preventDefault();
 
-  console.log(price);
-  const amount = price * 100; // Can be dynamically adjusted
+  const amount = price * 100;
   const currency = 'INR';
-  const receiptId = '1234567890'; // Can be dynamically adjusted
-  const token = localStorage.getItem('token'); // Replace with your actual token
-  
+  const receiptId = '1234567890';
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    console.error('No token found in localStorage');
+    return;
+  }
+
+  console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
+  console.log('VITE_RAZORPAY_KEY:', import.meta.env.VITE_RAZORPAY_KEY);
+
   try {
     const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/order`, {
       amount,
       currency,
       receipt: receiptId,
-      CourseId: Id // Add CourseId in the request body
+      CourseId: Id
     }, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     });
-    
+
     const order = response.data;
-    console.log('order', order);
-    console.log(import.meta.env.VITE_RAZORPAY_KEY);
+    console.log('Order:', order);
 
     const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY, // Add your Razorpay key here
+      key: import.meta.env.VITE_RAZORPAY_KEY,
       amount,
       currency,
-      name: "EDU THE COURSEVERSE", // Name of your organization
-      description: "Course Transaction", // Reason for the payment
-      image: "../src/assets/logo.png", // Ensure this path is correct
+      name: "EDU THE COURSEVERSE",
+      description: "Course Transaction",
+      image: "/logo.png",
       order_id: order.id,
       handler: async function (response) {
-        const body = { ...response, CourseId: Id }; 
+        const body = { ...response, CourseId: Id };
 
         try {
           const validateResponse = await axios.post(`${import.meta.env.VITE_API_URL}/users/validate`, body, {
@@ -46,7 +52,7 @@ const PaymentHandler = (Id, price) => async (event) => {
           });
 
           const jsonResponse = validateResponse.data;
-          console.log('jsonResponse', jsonResponse);
+          console.log('Validation Response:', jsonResponse);
         } catch (error) {
           console.error('Error during validation:', error);
         }
@@ -55,9 +61,9 @@ const PaymentHandler = (Id, price) => async (event) => {
         name: "Ritik Raj Pandey",
         email: "ritikphenomenon@gmail.com",
         contact: "8092849968",
-      }, // Change with customer prefill data
+      },
       notes: {
-        address: "Razorpay Corporate Office", // Any address
+        address: "Razorpay Corporate Office",
       },
       theme: {
         color: "#3399cc",
