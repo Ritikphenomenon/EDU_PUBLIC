@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "./UserCourseCard";
 import { useNavigate } from "react-router-dom";
-import ChangePassword from "../layout/ChangePassword";
+import ChangePassword from "../layout/UserChangePassword";
 
 
 const UserProfile = () => {
