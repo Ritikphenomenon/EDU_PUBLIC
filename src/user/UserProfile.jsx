@@ -1,25 +1,28 @@
-// src/components/Profile.js
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Card from "./UserCourseCard";
+import Card from "../user/UserCourseCard";
 import { useNavigate } from "react-router-dom";
 import ChangePassword from "../layout/UserChangePassword";
+import UserProfileForm from "./UserProfileForm";
+import Footer from "../Landing/Footer"
 
-
-const UserProfile = () => {
+const Profile = () => {
   const navigate = useNavigate();
-  const [profile, setProfile] = useState("");
+  const [profile, setProfile] = useState(null);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchProfile = async () => {
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/users/profile`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users/profile`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       setProfile(data);
     } catch (error) {
       console.error("Error fetching profile:", error.message);
@@ -27,41 +30,38 @@ const UserProfile = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_API_URL}/users/purchased-courses`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setCourses(Array.isArray(data) ? data : []);
-        //console.log(data)
-      } catch (error) {
-        console.error("Error fetching courses:", error.message);
-        setError("Error fetching courses");
-      } finally {
-        setLoading(false);
-      }
-    };
+  
 
+  const fetchCourses = async () => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users/purchased-courses`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setCourses(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Error fetching courses:", error.message);
+      setError("Error fetching courses");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchProfile();
     fetchCourses();
-  }, [courses]);
+  }, []);
 
   const handleLogout = () => {
-    // Clear the token from localStorage
     localStorage.removeItem("token");
-
-    // Navigate to the home page (you can replace '/' with the actual path to your home page)
     navigate("/");
   };
 
   const handleHome = () => {
-    // Navigate to the home page (you can replace '/' with the actual path to your home page)
     navigate("/userhome");
   };
 
@@ -93,71 +93,84 @@ const UserProfile = () => {
       </div>
 
       <div className="flex">
-        <div className="w-1/4 p-4 bg-gray-100 ">
+        <div className="w-1/4 p-4 bg-gray-100 h-screen ">
           <div className="text-center mb-8">
             <img
               src={profile.profilePhoto}
               alt="Profile"
               className="w-32 h-32 rounded-full mx-auto mb-4"
             />
-            <h2 className="text-2xl font-semibold">{profile.name}</h2>
-            <p className="text-gray-600">{profile.bio}</p>
+            <h2 className="text-2xl mb-2  font-semibold">{profile.username}</h2>
+            {console.log(profile.username)}
+            <p className="text-gray-600 w-48 mx-auto text-left">
+              {profile.bio}
+            </p>
 
-            <div className="flex items-center justify-center mt-2">
-              <img
-                src="src/assets/logout.png"
-                className="w-6 h-6 mr-2"
-                alt="icon"
-              />
-              <span
-                onClick={handleLogout}
-                className="px-4 py-2  underline cursor-pointer text-xl "
-              >
-                Logout
-              </span>
-            </div>
-
-            <div className="flex items-center justify-center ">
-              <img
-                src="src/assets/setting.png"
-                className="w-6 h-6 mr-2"
-                alt="icon"
-              />
-              <span
-                onClick={() =>
-                  document.getElementById("my_modal_2").showModal()
-                }
-                className="px-4 py-2  underline cursor-pointer text-xl "
-              >
-                Setting
-              </span>
-              <dialog id="my_modal_2" className="modal">
-                <div className="modal-box ">
-                  <ChangePassword></ChangePassword>
+            <div className="flex flex-col h-full justify-between">
+              <div>
+                <div className="flex items-center justify-center mt-2">
+                  <img
+                    src="src/assets/logout.png"
+                    className="w-6 h-6 mr-2"
+                    alt="icon"
+                  />
+                  <span
+                    onClick={handleLogout}
+                    className="px-4 py-2 underline cursor-pointer text-xl"
+                  >
+                    Logout
+                  </span>
                 </div>
-                <form method="dialog" className="modal-backdrop">
-                  <button>close</button>
-                </form>
-              </dialog>
+
+                <div className="flex items-center justify-center mt-2">
+                  <img
+                    src="src/assets/setting.png"
+                    className="w-6 h-6 mr-2"
+                    alt="icon"
+                  />
+                  <span
+                    onClick={() =>
+                      document.getElementById("my_modal_2").showModal()
+                    }
+                    className="px-4 py-2 underline cursor-pointer text-xl"
+                  >
+                    Setting
+                  </span>
+                  <dialog id="my_modal_2" className="modal">
+                    <div className="modal-box">
+                      <ChangePassword></ChangePassword>
+                    </div>
+                    <form method="dialog" className="modal-backdrop">
+                      <button>close</button>
+                    </form>
+                  </dialog>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="w-3/4 p-4">
-          <div className="text-center py-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Courses Purchased By
-            </h2>
-            <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-              <h3 className="text-2xl font-semibold text-gray-900">
-                {profile.name}
-              </h3>
+          <div className="">
+            <div className=" h-9 font-poppins font-bold text-2xl leading-9 text-gray-700 ml-2">
+              Hello {profile.name}👋!
+            </div>
+          
+            <div>
+              <UserProfileForm profile={profile} onUpdate={fetchProfile} />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-            {courses.length > 0 ? (
-              courses.map((course) => (
+          <div className=" h-9 font-poppins font-bold text-2xl leading-9 text-gray-700 ml-2 mb-7">
+      Purchased  course
+    </div>
+
+          {courses.length > 0 ? (
+            
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+              
+              {courses.map((course) => (
                 <Card
                 key={course._id}
                 imagelink={course.imageLink}
@@ -166,20 +179,29 @@ const UserProfile = () => {
                 link={course.courselink}
                 Id={course._id}
                 price={course.price}
+
                 />
-              ))
-            ) : (
-              <div className="flex items-center justify-center h-screen">
-                <p className="text-4xl font-bold text-gray-700 flex-shrink-0 ml-40">
-                  No Courses Available
-                </p>
+              ))}
+            </div>
+          ) : (
+            <div className="flex justify-center">
+              <div className="flex flex-col items-center">
+                <img
+                  className="w-64 h-64"
+                  src="/src/assets/No.png"
+                  alt="No content"
+                />
+                <h2 className="text-2xl font-semibold mt-4">Empty....</h2>
               </div>
-            )}
-          </div>
+
+            </div>
+          )}
         </div>
+        
       </div>
+      <Footer></Footer>
     </>
   );
 };
 
-export default UserProfile;
+export default Profile;

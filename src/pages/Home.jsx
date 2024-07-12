@@ -3,8 +3,8 @@
 import Signup from "../admin/signup";
 import UserLogin from "../user/UserLogin";
 import UserSignup from '../user/UserSignup'
+import Landing from "../Landing/Landing";
 
-import Carousel from "../components/Carousel"
 
  const Home = () => {
   return (
@@ -59,7 +59,7 @@ import Carousel from "../components/Carousel"
       </ul>
     </div>
   </div>
-  <Carousel/>
+  <Landing></Landing>
   </div>
   )
 }

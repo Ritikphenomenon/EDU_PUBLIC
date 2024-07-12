@@ -3,18 +3,20 @@ import axios from "axios";
 import Carousel from "../components/Carousel";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Landing/Footer";
+import { FaSearch } from 'react-icons/fa';
 
 const Ahome = () => {
   const [profileDetails, setProfileDetails] = useState(null);
   const [courses, setCourses] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [nonFilteredCourses, setNonFilteredCourses] = useState([]);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear the token from localStorage
     localStorage.removeItem("token");
-
-    // Navigate to the home page (you can replace '/' with the actual path to your home page)
     navigate("/");
   };
 
@@ -58,7 +60,7 @@ const Ahome = () => {
             }
           );
           setCourses(response.data);
-          console.log(response.data);
+          setFilteredCourses(response.data);
         } else {
           console.log("Token not found in localStorage");
         }
@@ -70,9 +72,26 @@ const Ahome = () => {
     fetchCourses();
   }, []);
 
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  useEffect(() => {
+    const filtered = courses.filter(course =>
+      course.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    const nonFiltered = courses.filter(course =>
+      !course.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    setFilteredCourses(filtered);
+    setNonFilteredCourses(nonFiltered);
+  }, [courses, searchQuery]);
+
   return (
-    <div>
+    <div className="m-6 overflow-hidden">
       <div className="navbar bg-base-100">
+
         <div className="flex-1">
           <img
             src="../src/assets/logo.png"
@@ -80,6 +99,26 @@ const Ahome = () => {
             className="w-16 h-auto "
           />
           <span className="text-lg font-bold">EDU</span>
+
+        </div>
+
+        <div className="flex items-center justify-end">
+
+
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Type here to search a course ......"
+              value={searchQuery}
+              onChange={handleSearch}
+              className="p-2 ml-8 h-10 border-gray-400 border-2 w-[320px] rounded-2xl pr-10"
+            />
+            <button
+              className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              <FaSearch />
+            </button>
+          </div>
         </div>
 
         <div className="flex-none">
@@ -116,11 +155,23 @@ const Ahome = () => {
           </ul>
         </div>
       </div>
+
       <Carousel />
-      {/* Render the list of courses */}
+
       <div>
         <div className="card-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 flex-wrap">
-          {courses.map((course) => (
+          {filteredCourses.map(course => (
+            <Card
+              key={course._id}
+              id={course._id}
+              imagelink={course.imageLink}
+              title={course.title}
+              rating={course.rating}
+              price={course.price}
+              link={course.courselink}
+            />
+          ))}
+          {nonFilteredCourses.map(course => (
             <Card
               key={course._id}
               id={course._id}
@@ -133,6 +184,8 @@ const Ahome = () => {
           ))}
         </div>
       </div>
+
+      <Footer></Footer>
     </div>
   );
 };

@@ -1,12 +1,14 @@
 import Card from "./UserCourseCard";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Footer from "../Landing/Footer";
+
 
 const UserCourseView = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { imagelink, title, rating, link, Id, price } = location.state || {};
-  console.log(imagelink);
+  console.log(Id)
   const handleHome = () => {
     // Navigate to the home page (you can replace '/' with the actual path to your home page)
     navigate("/userhome");
@@ -70,10 +72,10 @@ const UserCourseView = () => {
       <div className="min-h-screen bg-gradient-to-r from-green-50 to-blue-50 text-gray-800 p-8">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-5xl font-extrabold mb-6 text-center text-green-700">
-            Master Machine Learning with Emily Carter Live
+            Master {title} with Emily Carter Live
           </h1>
           <p className="text-lg mb-8 text-center text-gray-600">
-            Learn the fundamentals to advanced concepts of machine learning,
+            Learn the fundamentals to advanced concepts of {title},
             including hands-on projects and real-world applications.
           </p>
 
@@ -88,7 +90,7 @@ const UserCourseView = () => {
                   Foundation
                 </h3>
                 <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                  <li>Introduction to Machine Learning</li>
+                  <li>Introduction to {title}</li>
                   <li>Python for Data Science</li>
                   <li>Data Preprocessing and Cleaning</li>
                   <li>Exploratory Data Analysis</li>
@@ -139,7 +141,7 @@ const UserCourseView = () => {
 
               <div className="mb-6">
                 <h3 className="text-2xl font-semibold mb-2 text-blue-600">
-                  Advanced Machine Learning
+                  Advanced {title}
                 </h3>
                 <ul className="list-disc pl-6 space-y-1 text-gray-700">
                   <li>Ensemble Learning (Bagging, Boosting)</li>
@@ -153,7 +155,7 @@ const UserCourseView = () => {
 
               <div className="mb-6">
                 <h3 className="text-2xl font-semibold mb-2 text-blue-600">
-                  Machine Learning in Production
+                {title} in Production
                 </h3>
                 <ul className="list-disc pl-6 space-y-1 text-gray-700">
                   <li>Model Deployment and Monitoring</li>
@@ -177,6 +179,7 @@ const UserCourseView = () => {
             </div>
           </div>
         </div>
+        <Footer></Footer>
       </div>
     </>
   );

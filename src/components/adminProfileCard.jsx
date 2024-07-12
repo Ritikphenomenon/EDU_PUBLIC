@@ -57,7 +57,8 @@ const Card = ({ courseId, imageLink, title, rating, price, published, courseLink
         </h1>
         <div className="card-actions">
           <div className="flex justify-between">
-            <button className="btn px-2 py-1 text-black flex items-center mr-1 pr-4" onClick={handleOpenModal}>
+            
+            <button className="btn px-2 py-1 text-black flex items-center mr-3 pr-4" onClick={handleOpenModal}>
               <img src="../src/assets/update.png" alt="Icon" className="w-12 h-6 pr-4" />
               <span>Update</span>
             </button>

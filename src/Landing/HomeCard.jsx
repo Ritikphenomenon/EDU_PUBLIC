@@ -1,22 +1,19 @@
 
+import { toast } from 'react-toastify';
 
 
-import { useNavigate } from "react-router-dom";
+
 
 // eslint-disable-next-line react/prop-types
-const Card = ({imagelink,title,rating,price,id,link}) => {
-  const navigate=useNavigate();
-
-  console.log(id);
+const Card = ({imagelink,title,rating,price}) => {
+  
   
   const view=()=>{
-    console.log(price)
-    navigate('/usercourseview',{ state: { imagelink: imagelink, title: title,rating:rating,link:link,Id:id ,price:price} });
-    
+    toast.info('Please log in to view the details.');
  }
 
   return (
-    <div className="card max-w-xs sm:max-w-md md:max-w-sm lg:max-w-xs xl:max-w-xs bg-base-100 shadow-xl rounded-lg overflow-hidden ">
+    <div className="card max-w-xs sm:max-w-md md:max-w-sm lg:max-w-xs xl:max-w-xs bg-base-100 shadow-xl rounded-lg overflow-hidden  ">
 
   <figure className="overflow-hidden" >
     <img src={imagelink} alt="courses" className="w-full h-56 object-cover" />

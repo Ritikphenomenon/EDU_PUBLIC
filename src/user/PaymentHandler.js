@@ -7,6 +7,8 @@ const PaymentHandler = (Id, price) => async (event) => {
   const currency = 'INR';
   const receiptId = '1234567890';
   const token = localStorage.getItem('token');
+  console.log(Id)
+
 
   if (!token) {
     console.error('No token found in localStorage');
@@ -42,7 +44,8 @@ const PaymentHandler = (Id, price) => async (event) => {
       order_id: order.id,
       handler: async function (response) {
         const body = { ...response, CourseId: Id };
-
+        console.log(body)
+       
         try {
           const validateResponse = await axios.post(`${import.meta.env.VITE_API_URL}/users/validate`, body, {
             headers: {

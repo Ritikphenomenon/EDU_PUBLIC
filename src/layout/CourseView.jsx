@@ -1,8 +1,9 @@
 import Card from "../components/AdminCourseCard";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
- const  CourseView = ()=> {
+import Footer from "../Landing/Footer";
+ 
+const  CourseView = ()=> {
    const navigate= useNavigate();
    const location = useLocation();
    const {imagelink,title,rating,link,Id}=location.state || {}
@@ -67,8 +68,8 @@ import { useLocation } from "react-router-dom";
 
 <div className="min-h-screen bg-gradient-to-r from-green-50 to-blue-50 text-gray-800 p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-5xl font-extrabold mb-6 text-center text-green-700">Master Machine Learning with Emily Carter Live</h1>
-        <p className="text-lg mb-8 text-center text-gray-600">Learn the fundamentals to advanced concepts of machine learning, including hands-on projects and real-world applications.</p>
+        <h1 className="text-5xl font-extrabold mb-6 text-center text-green-700">Master {title} with Emily Carter Live</h1>
+        <p className="text-lg mb-8 text-center text-gray-600">Learn the fundamentals to advanced concepts of {title}, including hands-on projects and real-world applications.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white shadow-lg rounded-lg p-6">
@@ -77,7 +78,7 @@ import { useLocation } from "react-router-dom";
             <div className="mb-6">
               <h3 className="text-2xl font-semibold mb-2 text-blue-600">Foundation</h3>
               <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                <li>Introduction to Machine Learning</li>
+                <li>Introduction to {title}</li>
                 <li>Python for Data Science</li>
                 <li>Data Preprocessing and Cleaning</li>
                 <li>Exploratory Data Analysis</li>
@@ -119,7 +120,7 @@ import { useLocation } from "react-router-dom";
             <h2 className="text-3xl font-semibold mb-4 text-green-600">Advanced Syllabus</h2>
             
             <div className="mb-6">
-              <h3 className="text-2xl font-semibold mb-2 text-blue-600">Advanced Machine Learning</h3>
+              <h3 className="text-2xl font-semibold mb-2 text-blue-600">Advanced {title}</h3>
               <ul className="list-disc pl-6 space-y-1 text-gray-700">
                 <li>Ensemble Learning (Bagging, Boosting)</li>
                 <li>Neural Networks and Deep Learning</li>
@@ -131,10 +132,10 @@ import { useLocation } from "react-router-dom";
             </div>
 
             <div className="mb-6">
-              <h3 className="text-2xl font-semibold mb-2 text-blue-600">Machine Learning in Production</h3>
+              <h3 className="text-2xl font-semibold mb-2 text-blue-600">{title} in Production</h3>
               <ul className="list-disc pl-6 space-y-1 text-gray-700">
                 <li>Model Deployment and Monitoring</li>
-                <li>Scaling Machine Learning Models</li>
+                <li>Scaling {title} Models</li>
                 <li>Introduction to MLOps</li>
                 <li>Using Docker for ML Models</li>
                 <li>Cloud Platforms for ML (AWS, GCP, Azure)</li>
@@ -152,6 +153,7 @@ import { useLocation } from "react-router-dom";
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
      
 </>

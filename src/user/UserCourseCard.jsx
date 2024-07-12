@@ -1,13 +1,22 @@
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
 import axios from "axios";
 import PaymentHandler from "./PaymentHandler";
+
+import { useNavigate } from "react-router-dom";
+
 
 // eslint-disable-next-line react/prop-types
 const Card = ({ imagelink, title, rating, link, Id, price }) => {
   const [isPurchased, setIsPurchased] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const navigate= useNavigate();
+
+  const handleclick =()=>{
+    navigate('/course-content',{ state: { title1: title} });
+  }
 
   useEffect(() => {
     const checkCoursePurchase = async () => {
@@ -76,12 +85,12 @@ const Card = ({ imagelink, title, rating, link, Id, price }) => {
         {!loading && (
           <div className="">
             {isPurchased ? (
-              <Link
-                to={link}
+              <p
+                onClick={handleclick}
                 className="bg-blue-500 px-6 py-3 rounded-md text-white text-lg w-64 text-center inline-block"
               >
                 Start Learning
-              </Link>
+              </p>
             ) : (
                
               <button onClick={PaymentHandler(Id,price)}className="bg-green-500 px-6 py-3 rounded-md text-white text-lg w-64 text-center inline-block">

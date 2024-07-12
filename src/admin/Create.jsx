@@ -52,7 +52,7 @@ const CourseForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto  bg-white  rounded-md">
+    <div className=" w-96  bg-white  rounded-md m-8">
       <h2 className="text-xl font-semibold mb-4 text-center">Add New Course</h2>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>

@@ -11,6 +11,13 @@ import UserProfile from './user/UserProfile';
 import CourseView from './layout/CourseView';
 import ChangePassword from './layout/ChangePassword';
 import UserCourseView from './user/UserCourseView';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import ProfileContent from './CourseContent/ProfileContent';
+
+
 function App() {
  
   return (
@@ -27,9 +34,10 @@ function App() {
         <Route  path="/courseview"  element={<CourseView/>} />
         <Route  path="/changepassword"  element={<ChangePassword/>} />
         <Route  path="/usercourseview"  element={<UserCourseView/>} />
+        <Route  path="/course-content"  element={<ProfileContent/>} />
       </Routes>
     </Router>
-   
+    <ToastContainer />
     </>
   )
 }

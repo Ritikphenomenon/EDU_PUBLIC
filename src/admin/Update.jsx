@@ -20,6 +20,7 @@ const CourseForm = ({courseId,imageLink,title,rating,price,published,courseLink 
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
     try {
       // Retrieve token from localStorage

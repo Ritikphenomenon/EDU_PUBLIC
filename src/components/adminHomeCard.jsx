@@ -7,10 +7,11 @@ const Card = ({imagelink,title,rating,price,link,id}) => {
        navigate('/courseview',{ state: { imagelink: imagelink, title: title,rating:rating,link:link,Id:id } });
     }
     return (
-      <div className="card max-w-xs sm:max-w-md md:max-w-sm lg:max-w-xs xl:max-w-xs bg-base-100 shadow-xl rounded-lg overflow-hidden ">
+      
+      <div className="card  bg-base-100 shadow-xl rounded-lg overflow-hidden ">
   
     <figure className="overflow-hidden" >
-      <img src={imagelink} alt="courses" className="w-full h-56 object-cover" />
+      <img src={imagelink} alt="courses" className=" h-56 object-cover w-full p-1 rounded-lg" />
   
     </figure>
       <div className="card-body ">
