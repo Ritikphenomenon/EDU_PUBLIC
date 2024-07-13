@@ -7,16 +7,11 @@ const PaymentHandler = (Id, price) => async (event) => {
   const currency = 'INR';
   const receiptId = '1234567890';
   const token = localStorage.getItem('token');
-  console.log(Id)
-
 
   if (!token) {
     console.error('No token found in localStorage');
     return;
   }
-
-  console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
-  console.log('VITE_RAZORPAY_KEY:', import.meta.env.VITE_RAZORPAY_KEY);
 
   try {
     const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/order`, {
@@ -32,7 +27,6 @@ const PaymentHandler = (Id, price) => async (event) => {
     });
 
     const order = response.data;
-    console.log('Order:', order);
 
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY,
@@ -44,8 +38,7 @@ const PaymentHandler = (Id, price) => async (event) => {
       order_id: order.id,
       handler: async function (response) {
         const body = { ...response, CourseId: Id };
-        console.log(body)
-       
+        
         try {
           const validateResponse = await axios.post(`${import.meta.env.VITE_API_URL}/users/validate`, body, {
             headers: {
@@ -56,6 +49,9 @@ const PaymentHandler = (Id, price) => async (event) => {
 
           const jsonResponse = validateResponse.data;
           console.log('Validation Response:', jsonResponse);
+
+          // Reload the page upon successful payment validation
+          window.location.reload();
         } catch (error) {
           console.error('Error during validation:', error);
         }
@@ -85,6 +81,7 @@ const PaymentHandler = (Id, price) => async (event) => {
     });
 
     rzp1.open();
+
   } catch (error) {
     console.error('Error creating order:', error);
   }
