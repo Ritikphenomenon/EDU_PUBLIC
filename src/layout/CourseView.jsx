@@ -7,7 +7,7 @@ const  CourseView = ()=> {
    const navigate= useNavigate();
    const location = useLocation();
    const {imagelink,title,rating,link,Id}=location.state || {}
-   console.log(imagelink)
+  // console.log(imagelink)
   const handleHome = () => {
     
     // Navigate to the home page (you can replace '/' with the actual path to your home page)

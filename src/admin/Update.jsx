@@ -34,7 +34,7 @@ const CourseForm = ({courseId,imageLink,title,rating,price,published,courseLink 
       });
 
       // Handle success
-      console.log('Course updated successfully:', response.data);
+      console.log('Course updated successfully:');
       // Optionally, you can redirect or display a success message
       window.location.reload();
 

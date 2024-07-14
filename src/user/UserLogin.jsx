@@ -1,11 +1,12 @@
-
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
 import Signup from "./UserSignup";
 
 const UserLogin = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [condition, setCondition] = useState(true); // State to manage the condition
@@ -26,10 +27,11 @@ const UserLogin = () => {
       });
       const token = response.data.token;
       localStorage.setItem("token", token);
-      Navigate("/userhome");
-      console.log(response.data.message);
+      toast.success(response.data.message || "Logged in successfully");
+      navigate("/userhome");
     } catch (error) {
-      console.error("Error logging in:", error.message);
+      const errorMessage = error.response?.data?.message || "Error logging in. Please try again.";
+      toast.error(errorMessage);
     }
   };
 
@@ -39,6 +41,7 @@ const UserLogin = () => {
 
   return (
     <div>
+      <ToastContainer />
       {condition ? ( // Conditional rendering based on the condition
         <form className="bg-white rounded-lg max-w-xs w-full">
           <h2 className="text-xl font-bold mb-6">Login to Continue</h2>

@@ -34,7 +34,7 @@ const Ahome = () => {
             }
           );
           setProfileDetails(response.data);
-          console.log(profileDetails);
+         // console.log(profileDetails);
         } else {
           console.log("Token not found in localStorage");
         }

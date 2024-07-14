@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 const Card = ({imagelink,title,rating,price,id,link}) => {
   const navigate=useNavigate();
 
-  console.log(id);
+  //console.log(id);
   
   const view=()=>{
-    console.log(price)
+   // console.log(price)
     navigate('/usercourseview',{ state: { imagelink: imagelink, title: title,rating:rating,link:link,Id:id ,price:price} });
     
  }
